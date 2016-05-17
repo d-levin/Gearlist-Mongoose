@@ -2,6 +2,7 @@
 | Package | Explanation |
 | ------- | ----------- |
 | bcryptjs | Encryption for user authentication; this library works on machines running Windows |
+| bluebird | Promise library |
 | body-parser | Middleware for decoding JSON |
 | change-case | String manipulation |
 | cors | Allow cross origin requests | 

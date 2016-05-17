@@ -1,15 +1,16 @@
 /* Connection to MongoDB */
 
-var mongoose = require('mongoose');
+var Promise = require('bluebird');
+var mongoose = Promise.promisifyAll(require('mongoose'));
 var dbConfig = require('../config/').db;
 
-mongoose.connect(dbConfig.development, function(err) {
-  if (err) {
-    console.log('Mongoose connection failed ' + err);
-  } else {
+mongoose.connectAsync(dbConfig.development)
+  .then(function() {
     console.log('Mongoose connected to ' + dbConfig.development);
-  }
-});
+  })
+  .catch(function(err) {
+    console.log('Mongoose connection failed (' + err + ')');
+  });
 
 /*
  * Handles CTRL-C signal
