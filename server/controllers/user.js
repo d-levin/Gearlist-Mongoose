@@ -4,35 +4,37 @@ var User = require('../models/').user;
 
 module.exports = {
   // Return all users
-  get: function(req, res) {
+  get: function(req, res, next) {
     User.findAsync()
       .then(function(users) {
         res.json({ error: false, data: users });
       })
-      .catch(function(err) {
-        return res.status(500).json({ error: true, data: { message: err } });
-      });
+      .catch(next);
   },
   // Return one user by ID
-  getById: function(req, res) {
+  getById: function(req, res, next) {
     User.findByIdAsync(req.params.userId)
       .then(function(user) {
         res.json({ error: false, data: user });
       })
-      .catch(function(err) {
-        return res.status(500).json({ error: true, data: { message: err } });
-      });
+      .catch(next);
+  },
+  // Return one user by email
+  getByEmail: function(req, res, next) {
+    User.findOneAsync({ email: req.params.userEmail })
+      .then(function(user) {
+        res.json({ error: false, data: user });
+      })
+      .catch(next);
   },
   // Update one user by ID
-  updateById: function(req, res) {
+  updateById: function(req, res, next) {
     // Option param to return the updated object
     User.findByIdAndUpdateAsync(req.params.userId, req.body, { new: true })
       .then(function(user) {
         res.json({ error: false, data: user });
       })
-      .catch(function(err) {
-        return res.status(500).json({ error: true, data: { message: err } });
-      });
+      .catch(next);
   },
   // Create a new user
   post: function(req, res, next) {
@@ -45,18 +47,14 @@ module.exports = {
       .then(function() {
         res.json({ error: false, data: user });
       })
-      .catch(function(err) {
-        return res.status(500).json({ error: true, data: { message: err } });
-      });
+      .catch(next);
   },
   // Delete one user by ID
-  deleteById: function(req, res) {
+  deleteById: function(req, res, next) {
     User.findByIdAndRemoveAsync(req.params.userId)
       .then(function(user) {
         res.json({ error: false, data: user });
       })
-      .catch(function(err) {
-        return res.status(500).json({ error: true, data: { message: err } });
-      });
+      .catch(next);
   }
 };

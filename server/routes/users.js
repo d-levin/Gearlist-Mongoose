@@ -18,14 +18,11 @@ router.route('/:userId')
   .delete(userCtrl.deleteById);
 
 router.route('/username/:userEmail')
-  // Get User by Email
-  .get(function(req, res) {
-    User.findOne({ email: req.params.userEmail }, function(err, user) {
-      if (err) {
-        return res.status(500).json({ error: true, data: { message: err } });
-      }
-      res.json({ error: false, data: user });
-    });
-  });
+  .get(userCtrl.getByEmail);
+
+/* Error handler */
+router.use(function(err, req, res, next) {
+  return res.status(500).json({ error: true, data: { message: err } });
+});
 
 module.exports = router;
