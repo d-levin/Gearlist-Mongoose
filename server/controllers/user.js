@@ -7,34 +7,56 @@ module.exports = {
   get: function(req, res, next) {
     User.findAsync()
       .then(function(users) {
+        console.log('get');
         res.json({ error: false, data: users });
       })
-      .catch(next);
+      .catch(function(err) {
+        next(err);
+      });
   },
   // Return one user by ID
   getById: function(req, res, next) {
     User.findByIdAsync(req.params.userId)
       .then(function(user) {
+        console.log('getById');
         res.json({ error: false, data: user });
       })
-      .catch(next);
+      .catch(function(err) {
+        next(err);
+      });
   },
   // Return one user by email
   getByEmail: function(req, res, next) {
     User.findOneAsync({ email: req.params.userEmail })
       .then(function(user) {
-        res.json({ error: false, data: user });
+        // Avoid returning null value
+        if (user) {
+          console.log('getByEmail');
+          res.json({ error: false, data: user });
+        } else {
+          next('User does not exist');
+        }
       })
-      .catch(next);
+      .catch(function(err) {
+        next(err);
+      });
   },
   // Update one user by ID
   updateById: function(req, res, next) {
     // Option param to return the updated object
-    User.findByIdAndUpdateAsync(req.params.userId, req.body, { new: true })
+    User.findOneAndUpdateAsync({ _id: req.params.userId }, req.body, { new: true })
       .then(function(user) {
-        res.json({ error: false, data: user });
+        // Avoid returning null value
+        if (user) {
+          res.json({ error: false, data: user });
+        } else {
+          console.log('updateById');
+          next('User does not exist');
+        }
       })
-      .catch(next);
+      .catch(function(err) {
+        next(err);
+      });
   },
   // Create a new user
   post: function(req, res, next) {
@@ -45,16 +67,27 @@ module.exports = {
     user.password = req.body.password;
     user.saveAsync()
       .then(function() {
+        console.log('post');
         res.json({ error: false, data: user });
       })
-      .catch(next);
+      .catch(function(err) {
+        next(err);
+      });
   },
   // Delete one user by ID
   deleteById: function(req, res, next) {
-    User.findByIdAndRemoveAsync(req.params.userId)
+    User.findOneAndRemoveAsync({ _id: req.params.userId })
       .then(function(user) {
-        res.json({ error: false, data: user });
+        // Avoid returning null value
+        if (user) {
+          res.json({ error: false, data: user });
+        } else {
+          console.log('deleteById');
+          next('User does not exist');
+        }
       })
-      .catch(next);
+      .catch(function(err) {
+        next(err);
+      });
   }
 };

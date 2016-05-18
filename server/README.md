@@ -5,6 +5,7 @@
 | bluebird | Promise library |
 | body-parser | Middleware for decoding JSON |
 | change-case | String manipulation |
+| compression | Reduces size of response body |
 | cors | Allow cross origin requests | 
 | express | Web framework that makes it easy to write secure, modular, and fast applications |
 | helmet | Secures HTTP headers |
@@ -14,6 +15,7 @@
 | path | Handles and transforms file paths |
 | require-dir | Automatically require all files in a directory |
 | serve-favicon | Serves a favicon |
+| serve-static | Efficient serving of static files |
 
 #### Routes
 | HTTP VERB | PATH | ACTION | RETURN VALUE |
@@ -26,3 +28,11 @@
 | PUT | /api/users/:userId | Update user with specified ID | JSON object |
 | DELETE | /api/users/:userId | Remove user with specified ID | JSON object |
 | GET | /api/users/username/:userEmail | Retrieve user with specified email | JSON object |
+
+#### Mongoose
+* The following functions return null values if item not found:
+	* findOneAndRemove
+	* findOneAndUpdate
+	* findOne
+* Instead of returning null, an error is returned using errorHandler indicating 'User DNE'
+* Promisify should not be used with Mongoose >= 4.1.0 - UPDATE THIS

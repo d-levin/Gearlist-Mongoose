@@ -4,6 +4,8 @@ var path = require('path');
 var cors = require('cors');
 var favicon = require('serve-favicon');
 var helmet = require('helmet');
+var serveStatic = require('serve-static');
+var compression = require('compression');
 var db = require('./services/database');
 
 var app = express();
@@ -11,10 +13,11 @@ var port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(helmet());
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(favicon(path.join(__dirname, '/public/favicon.ico')));
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(serveStatic(path.join(__dirname, '/public')));
 
 /* Bring in the routes */
 require('./routes/')(app);

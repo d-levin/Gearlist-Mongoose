@@ -25,4 +25,16 @@ var userSchema = new Schema({
   }]
 });
 
+// Do initial password hashing here
+userSchema.pre('save', function(next) {
+  console.log('Hook on save');
+  next();
+});
+
+// Do password validation here
+userSchema.pre('findOneAndUpdate', function(next) {
+  console.log('Hook on findOneAndUpdate');
+  next();
+});
+
 module.exports = mongoose.model('User', userSchema);

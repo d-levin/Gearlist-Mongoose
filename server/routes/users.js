@@ -2,9 +2,6 @@
 
 var router = require('express').Router();
 
-// Include schemas
-var User = require('../models/').user;
-
 // Logic for routes handled in controller
 var userCtrl = require('../controllers/user');
 
@@ -21,8 +18,6 @@ router.route('/username/:userEmail')
   .get(userCtrl.getByEmail);
 
 /* Error handler */
-router.use(function(err, req, res, next) {
-  return res.status(500).json({ error: true, data: { message: err } });
-});
+router.use(require('../services/errorHandler'));
 
 module.exports = router;
