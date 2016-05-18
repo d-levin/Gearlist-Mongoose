@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 var mongoose = Promise.promisifyAll(require('mongoose'));
 var dbConfig = require('../config/').db;
 
-mongoose.connectAsync(dbConfig.development)
+mongoose.connectAsync(dbConfig.development, dbConfig.options)
   .then(function() {
     console.log('Mongoose connected to ' + dbConfig.development);
   })

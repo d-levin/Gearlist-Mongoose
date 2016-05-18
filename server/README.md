@@ -35,4 +35,9 @@
 	* findOneAndUpdate
 	* findOne
 * Instead of returning null, an error is returned using errorHandler indicating 'User DNE'
+	* Alternatively, findOneAndUpdate is the only one we need because of pre-hook support
+	The other two can be replaced with findByIdAndUpdate and findById
 * Promisify should not be used with Mongoose >= 4.1.0 - UPDATE THIS
+	* Will probably require usage of .exec() when running Mongoose functions to trigger promise
+* Connection pooling doesn't seem to work
+	* Try without Async
