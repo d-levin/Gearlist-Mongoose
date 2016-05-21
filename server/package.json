@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha ./test/"
   },
   "author": "Dennis Levin",
   "license": "ISC",
@@ -30,6 +30,9 @@
     "serve-static": "1.10.2"
   },
   "devDependencies": {
-    "morgan": "1.7.0"
+    "chai": "3.5.0",
+    "mocha": "2.4.5",
+    "morgan": "1.7.0",
+    "supertest": "1.2.0"
   }
 }

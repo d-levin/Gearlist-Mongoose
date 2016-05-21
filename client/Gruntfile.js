@@ -35,6 +35,8 @@ module.exports = function(grunt) {
       // Think about responsive design
       // e.g. mobile first where we only want
       // to load mobile styles
+      // Flow:
+      // concatenate -> minify to build folder
       // css: {
       //   src: ['app/styles/*.css'],
       //   dest: 'build/styles/styles.css'

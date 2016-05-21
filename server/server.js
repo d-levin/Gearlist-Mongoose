@@ -9,21 +9,23 @@ var compression = require('compression');
 var db = require('./services/database');
 
 /* Dev dependencies */
-var logger = require('morgan');
+var morgan = require('morgan');
 
 /* https setup */
-// var fs = require('fs');
-// var https = require('https');
-// var https_options = {
-//   key: fs.readFileSync('./tls/key.pem'),
-//   cert: fs.readFileSync('./tls/cert.pem')
-// };
+var fs = require('fs');
+var https = require('https');
+var http = require('http');
+var https_options = {
+  key: fs.readFileSync('./secrets/key.pem'),
+  cert: fs.readFileSync('./secrets/key-cert.pem')
+};
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
+app.set('secure-port', 3001);
 
 app.use(compression());
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,7 +46,7 @@ require('./routes/')(app);
 
 /* Error handlers */
 // User routes
-app.use('/api/', require('./services/errorHandler'));
+app.use('/api/*', require('./services/errorHandler'));
 
 // Unhandled exceptions
 process.on('uncaughtException', function(err) {
@@ -53,13 +55,12 @@ process.on('uncaughtException', function(err) {
   process.exit(1);
 });
 
-/* https server setup */
-// app.listen = function() {
-//   var server = https.createServer(http_options, this);
-//   return server.listen.apply(app.get('port'));
-// };
-
-/* Start the server */
-app.listen(app.get('port'), function() {
+// /* Start the server * /
+http_server = http.createServer(app).listen(app.get('port'), function() {
   console.log('Listening on port ' + app.get('port'));
 });
+https_server = https.createServer(https_options, app).listen(app.get('secure-port'), function() {
+  console.log('Listening on port ' + app.get('secure-port'));
+});
+
+module.exports = app;

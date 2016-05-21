@@ -27,10 +27,7 @@ var userSchema = new Schema({
   }]
 });
 
-var util = require('util');
-
 userSchema.pre('save', function(next) {
-  console.log('Hook on save ' + util.inspect(this));
   var user = this;
 
   // Only hash password if new or changed

@@ -1,16 +1,13 @@
 /* Connection to MongoDB */
 
-// var Promise = require('bluebird');
-// var mongoose = Promise.promisifyAll(require('mongoose'));
-
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-var dbConfig = require('../config/').db;
+var dbConfig = require('../config/config').db;
 
 /* Helper method for MongoDB connection */
 var connectWithRetry = function() {
-  mongoose.connect(dbConfig.development, dbConfig.options);
+  mongoose.connect(dbConfig.server, dbConfig.options);
 };
 connectWithRetry();
 
@@ -19,7 +16,7 @@ var db = mongoose.connection;
 
 // Retry on error
 db.on('error', function() {
-  console.error('Mongoose connection failed - retrying in 5 sec');
+  console.log('Mongoose connection failed - retrying in 5 sec');
   setTimeout(connectWithRetry, 5000);
 });
 // On successful connection

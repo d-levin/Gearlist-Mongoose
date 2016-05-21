@@ -20,7 +20,10 @@
 #### Dev Dependency Summary
 | Package | Explanation |
 | ------- | ----------- |
+| chai | Assertion library |
+| mocha | Test framework (watch with mocha --watch) |
 | morgan | HTTP request logger |
+| supertest | REST test framework |
 
 #### Routes
 * JSON is returned in the following format: {error: <value>, data: <value>}
@@ -58,6 +61,8 @@
 In user controller, if password has changed, then hash it
 In model, for new users always hash password
 For consistency, maybe only call hash function from controller?
+* HTTPS on port 3001
+	* Routes do not work over https
 
 Error checking on front-end
 If !error && data == null, then user not found
@@ -68,16 +73,6 @@ never get called from a client application
 
 #### Mongoose
 * Functions return 'null' if a user is not found
-* Can be checked with:
-```javascript
-if (user) {
-  res.json({ error: false, data: user });
-} else {
-  next('User does not exist');
-}
-```
-* Instead of returning null, an error can be returned using errorHandler indicating 'User DNE'
-	* Alternatively, findOneAndUpdate is the only one we need because of pre-hook support
-	The other two can be replaced with findByIdAndUpdate and findById
-* Promisify should not be used with Mongoose >= 4.1.0 - UPDATE THIS
-	* Will probably require usage of .exec() when running Mongoose functions to trigger promise
+
+#### Error Handling
+* All routes use a common error handler /services/errorHandler.js
