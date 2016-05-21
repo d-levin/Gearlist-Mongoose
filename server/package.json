@@ -28,5 +28,8 @@
     "require-dir": "0.3.0",
     "serve-favicon": "2.3.0",
     "serve-static": "1.10.2"
+  },
+  "devDependencies": {
+    "morgan": "1.7.0"
   }
 }

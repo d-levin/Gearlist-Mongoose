@@ -1,7 +1,9 @@
 /* User Model */
 
+var bcrypt = require('bcryptjs');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+SALT_WORK_FACTOR = 10;
 
 var userSchema = new Schema({
   firstName: { type: String, required: true },
@@ -25,16 +27,52 @@ var userSchema = new Schema({
   }]
 });
 
-// Do initial password hashing here
+var util = require('util');
+
 userSchema.pre('save', function(next) {
-  console.log('Hook on save');
-  next();
+  console.log('Hook on save ' + util.inspect(this));
+  var user = this;
+
+  // Only hash password if new or changed
+  if (!user.isModified('password')) {
+    return next();
+  }
+
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) {
+      return next(err);
+    }
+
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if (err) {
+        return next(err);
+      }
+      user.password = hash;
+      next();
+    });
+  });
 });
 
-// Do password validation here
 userSchema.pre('findOneAndUpdate', function(next) {
   console.log('Hook on findOneAndUpdate');
   next();
 });
+
+userSchema.methods = {
+  generatePassword: function() {
+
+  },
+  comparePassword: function(candidatePassword, next) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+      if (err) {
+        return next(err);
+      }
+      next(null, isMatch);
+    });
+  },
+  getLists: function() {
+    console.log('getting lists');
+  }
+};
 
 module.exports = mongoose.model('User', userSchema);

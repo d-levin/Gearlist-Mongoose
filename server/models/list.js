@@ -10,6 +10,9 @@ var listSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Item',
     unique: true
+  }, {
+    quantity: Number,
+    worn: Boolean
   }]
 });
 

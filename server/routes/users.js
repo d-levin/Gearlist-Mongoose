@@ -9,15 +9,21 @@ router.route('/')
   .get(userCtrl.get)
   .post(userCtrl.post);
 
-router.route('/:userId')
+router.route('/:id')
   .get(userCtrl.getById)
   .put(userCtrl.updateById)
   .delete(userCtrl.deleteById);
 
-router.route('/username/:userEmail')
-  .get(userCtrl.getByEmail);
+router.route('/:id/lists')
+  .get(userCtrl.getLists);
 
-/* Error handler */
-router.use(require('../services/errorHandler'));
+router.route('/:id/categories')
+  .get(userCtrl.getCategories);
+
+router.route('/:id/items')
+  .get(userCtrl.getItems);
+
+router.route('/email/:email')
+  .get(userCtrl.getByEmail);
 
 module.exports = router;
