@@ -1,6 +1,6 @@
 var request = require('supertest');
 
-var serverURL = 'http://localhost:3000';
+var serverURL = 'http://localhost:' + require('../config/config').port;
 
 describe('USER ROUTES', function() {
   var id = '';

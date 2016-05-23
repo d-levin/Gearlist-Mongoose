@@ -1,30 +1,21 @@
 {
-  "name": "server",
+  "name": "geartracker",
   "version": "1.0.0",
-  "description": "MEAN stack project",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "./node_modules/mocha/bin/mocha ./test/"
+    "start": "NODE_ENV=development nodemon ./server.js",
+    "test": "./node_modules/mocha/bin/mocha ./test"
   },
-  "author": "Dennis Levin",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "2.3.0",
     "bluebird": "3.3.5",
     "body-parser": "1.15.1",
     "change-case": "2.3.1",
     "compression": "1.6.2",
-    "cors": "2.7.1",
     "express": "4.13.4",
     "helmet": "2.0.0",
     "lodash": "4.12.0",
     "mongoose": "4.4.17",
-    "passport": "0.3.2",
-    "passport-facebook": "2.1.0",
-    "passport-google-oauth": "1.0.0",
-    "passport-local": "1.0.0",
-    "path": "0.12.7",
     "require-dir": "0.3.0",
     "serve-favicon": "2.3.0",
     "serve-static": "1.10.2"
@@ -34,5 +25,8 @@
     "mocha": "2.4.5",
     "morgan": "1.7.0",
     "supertest": "1.2.0"
+  },
+  "engines": {
+    "node": "5.10.1"
   }
 }

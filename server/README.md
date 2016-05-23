@@ -6,13 +6,10 @@
 | body-parser | Middleware for decoding JSON |
 | change-case | String manipulation |
 | compression | Reduces size of response body |
-| cors | Allow cross origin requests | 
 | express | Web framework that makes it easy to write secure, modular, and fast applications |
 | helmet | Secures HTTP headers |
 | lodash | Simplifies iterating over arrays, objects, and strings |
-| mongoose | Object-oriented database API |
-| passport, passport-* | User authentication |
-| path | Handles and transforms file paths |
+| mongoose | MongoDB API |
 | require-dir | Automatically require all files in a directory |
 | serve-favicon | Serves a favicon |
 | serve-static | Efficient serving of static files |
@@ -26,7 +23,7 @@
 | supertest | REST test framework |
 
 #### Routes
-* JSON is returned in the following format: {error: <value>, data: <value>}
+* JSON is returned in the following format: {error: value, data: {value}}
 
 | HTTP VERB | PATH | ACTION | RETURN VALUE |
 | --------- | ---- | ------ | ------------ |
@@ -57,22 +54,27 @@
 | PUT | /api/items/:id | Update item with specified ID | JSON object |
 | DELETE | /api/items/:id | Remove item with specified ID | JSON object |
 
-#### Misc
-In user controller, if password has changed, then hash it
-In model, for new users always hash password
-For consistency, maybe only call hash function from controller?
-* HTTPS on port 3001
-	* Routes do not work over https
-
-Error checking on front-end
-If !error && data == null, then user not found
-If !error && data != null, then an actual error
-
-Perhaps add specific dev routes on the backend? E.g. routes that will
-never get called from a client application
-
-#### Mongoose
+#### Mongoose Details
 * Functions return 'null' if a user is not found
 
 #### Error Handling
-* All routes use a common error handler /services/errorHandler.js
+* Specified in app.js
+
+#### Issues
+* Unhandled exception if incorrect Mongoose user credentials
+	* Does not get caught by global error handler in app.js
+
+#### TODO
+* App structure should be:
+	* Require dependencies
+	* Require middleware
+	* Create app
+	* Configure and enable middleware
+	* Require routes
+	* Include error handling
+	* Start server
+* Password hashing on POST user
+* Password rehashing on PUT user && password.isModified
+* Figure out security:
+	* CORS
+	* csurf

@@ -6,9 +6,9 @@ var Schema = mongoose.Schema;
 SALT_WORK_FACTOR = 10;
 
 var userSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, unique: true, required: true },
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  email: { type: String, unique: true, required: true, trim: true },
   password: { type: String, required: true },
   items: [{
     type: Schema.ObjectId,
@@ -51,7 +51,7 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.pre('findOneAndUpdate', function(next) {
-  console.log('Hook on findOneAndUpdate');
+  console.info('Hook on findOneAndUpdate');
   next();
 });
 
@@ -68,7 +68,7 @@ userSchema.methods = {
     });
   },
   getLists: function() {
-    console.log('getting lists');
+    console.info('getting lists');
   }
 };
 
