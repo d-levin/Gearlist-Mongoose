@@ -5,54 +5,44 @@ var Category = require('../models/').category;
 module.exports = {
   // Return all categories
   get: function(req, res, next) {
-    Category.findAsync()
+    Category.find()
       .then(function(categories) {
         res.json({ error: false, data: categories });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Return one category by ID
   getById: function(req, res, next) {
-    Category.findByIdAsync(req.params.id)
+    Category.findById(req.params.id)
       .then(function(category) {
         res.json({ error: false, data: category });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Update one category by ID
   updateById: function(req, res, next) {
     // Option param to return the updated object
-    Category.findOneAndUpdateAsync({ _id: req.params.id }, req.body, { new: true })
+    Category.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
       .then(function(category) {
         res.json({ error: false, data: category });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Create a new category
   post: function(req, res, next) {
     var category = new Category(req.body);
-    category.saveAsync()
+    category.save()
       .then(function() {
         res.json({ error: false, data: category });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Delete one category by ID
   deleteById: function(req, res, next) {
-    Category.findByIdAndRemoveAsync({ _id: req.params.id })
+    Category.findByIdAndRemove({ _id: req.params.id })
       .then(function(category) {
         res.json({ error: false, data: category });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   }
 };

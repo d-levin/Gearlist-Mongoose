@@ -5,54 +5,44 @@ var List = require('../models/').list;
 module.exports = {
   // Return all lists
   get: function(req, res, next) {
-    List.findAsync()
+    List.find()
       .then(function(lists) {
         res.json({ error: false, data: lists });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Return one list by ID
   getById: function(req, res, next) {
-    List.findByIdAsync(req.params.id)
+    List.findById(req.params.id)
       .then(function(list) {
         res.json({ error: false, data: list });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Update one list by ID
   updateById: function(req, res, next) {
     // Option param to return the updated object
-    List.findOneAndUpdateAsync({ _id: req.params.id }, req.body, { new: true })
+    List.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
       .then(function(list) {
         res.json({ error: false, data: list });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Create a new list
   post: function(req, res, next) {
     var list = new List(req.body);
-    list.saveAsync()
+    list.save()
       .then(function() {
         res.json({ error: false, data: list });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   },
   // Delete one list by ID
   deleteById: function(req, res, next) {
-    List.findByIdAndRemoveAsync({ _id: req.params.id })
+    List.findByIdAndRemove({ _id: req.params.id })
       .then(function(list) {
         res.json({ error: false, data: list });
       })
-      .catch(function(err) {
-        next(err);
-      });
+      .catch(next);
   }
 };

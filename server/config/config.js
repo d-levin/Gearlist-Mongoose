@@ -28,8 +28,10 @@ var config = {
     },
     port: process.env.PORT || 3000,
     db: {
-      server: 'mongodb://dbuser:dbpassword@ds019101.mlab.com:19101/ham-wip',
+      server: 'mongodb://ds019101.mlab.com:19101/ham-wip',
       options: {
+        user: 'dbuser',
+        pass: 'dbpassword',
         server: {
           poolSize: 10
         }

@@ -64,6 +64,10 @@
 * Unhandled exception if incorrect Mongoose user credentials
 	* Does not get caught by global error handler in app.js
 
+#### Testing
+* Start the server
+* Run 'mocha' or 'npm test' from the server directory
+
 #### TODO
 * App structure should be:
 	* Require dependencies

@@ -30,8 +30,8 @@ require('./routes/')(app);
 
 /* Error handlers */
 // For routes
-app.use('/api/*', function(err, req, res, next) {
-  console.info('Errorhandler for /api/ routes called');
+app.use(function(err, req, res, next) {
+  console.info('Errorhandler called');
   return res
     .status(err.status || 500)
     .json({ error: true, data: { message: err } });

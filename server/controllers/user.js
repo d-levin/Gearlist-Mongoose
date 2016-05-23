@@ -65,9 +65,6 @@ module.exports = {
     // Option param to return the updated object
     User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
       .then(function(user) {
-        // check here if req.body.password exists
-        // if yes, then call the hashing function to
-        // rehash the password
         res.json({ error: false, data: user });
       })
       .catch(next);
@@ -77,7 +74,7 @@ module.exports = {
     var user = new User(req.body);
     user.save()
       .then(function() {
-        res.json({ error: false, data: user });
+        res.status(201).json({ error: false, data: user });
       })
       .catch(next);
   },
